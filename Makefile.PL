@@ -8,7 +8,7 @@ WriteMakefile(
 		'Exporter' => '5.57', # in core since 5.8.3, and also on CPAN
 	},
 	($] >= 5.005
-		?	
+		?
 			(
 				ABSTRACT	=> "Add line numbers to eval'ed heredoc blocks",
 				AUTHOR		=> 'David Muir Sharnoff <cpan@dave.sharnoff.org>',

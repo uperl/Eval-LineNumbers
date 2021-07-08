@@ -5,9 +5,17 @@ use warnings;
 use strict;
 
 use Exporter 5.57 'import';
-our @EXPORT_OK = qw(eval_line_numbers);
+our @EXPORT_OK = qw(eval_line_numbers eval_line_numbers_offset);
 
 our $VERSION = 0.34;
+
+my %offset;
+
+sub eval_line_numbers_offset
+{
+	my(undef, $file) = caller;
+	$offset{$file} = shift;
+}
 
 sub eval_line_numbers
 {
@@ -15,9 +23,14 @@ sub eval_line_numbers
 		# Optional first arg is the caller level
 		$_[0] =~ /^[0-9]+$/ ? (shift) : 0
 	);
-	$line++;
+	if(defined $offset{$file}) {
+		$line += $offset{$file};
+	} else {
+		$line++;
+	}
 	return join('', qq{#line $line "$file"\n}, @_)
 }
+
 1;
 
 __END__
@@ -61,6 +74,27 @@ END_HEREIS
 
  eval eval_line_numbers(1, example())
 
+=head1 FUNCTIONS
+
+All functions are exportable on request, but not by default.
+
+=head2 eval_line_numbers
+
+ eval eval_line_numbers($code);
+ eval eval_line_numbers($caller_level, $code);
+
+=head2 eval_line_numbers_offset
+
+ eval_line_numbers_offset $offset;
+
+Sets the offset, which is by default 1.  The offset is file scoped.  This
+is useful if you want to pass a string without a heredoc.  For example:
+
+ eval_line_numbers_offset 0;
+ eval eval_line_numbers q{
+   die "here";
+ };
+
 =head1 LICENSE
 
 Copyright (C) 2009 David Muir Sharnoff.
@@ -69,3 +103,4 @@ Copyright (C) 2013 Google, Inc.
 This package may be used and redistributed under the terms of either
 the Artistic 2.0 or LGPL 2.1 license.
 
+=cut

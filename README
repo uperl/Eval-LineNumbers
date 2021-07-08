@@ -34,6 +34,24 @@ DESCRIPTION
 
      eval eval_line_numbers(1, example())
 
+FUNCTIONS
+    All functions are exportable on request, but not by default.
+
+  eval_line_numbers
+     eval eval_line_numbers($code);
+     eval eval_line_numbers($caller_level, $code);
+
+  eval_line_numbers_offset
+     eval_line_numbers_offset $offset;
+
+    Sets the offset, which is by default 1. The offset is file scoped. This
+    is useful if you want to pass a string without a heredoc. For example:
+
+     eval_line_numbers_offset 0;
+     eval eval_line_numbers q{
+       die "here";
+     };
+
 LICENSE
     Copyright (C) 2009 David Muir Sharnoff. Copyright (C) 2013 Google, Inc.
 
