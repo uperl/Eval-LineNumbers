@@ -1,4 +1,3 @@
-
 package Eval::LineNumbers;
 
 use warnings;
@@ -7,37 +6,34 @@ use strict;
 use Exporter 5.57 'import';
 our @EXPORT_OK = qw(eval_line_numbers eval_line_numbers_offset);
 
-our $VERSION = 0.34;
+# ABSTRACT: Add line numbers to heredoc blocks that contain perl source code
+# VERSION
 
 my %offset;
 
 sub eval_line_numbers_offset
 {
-	my(undef, $file) = caller;
-	$offset{$file} = shift;
+  my(undef, $file) = caller;
+  $offset{$file} = shift;
 }
 
 sub eval_line_numbers
 {
-	my(undef, $file, $line) = caller(
-		# Optional first arg is the caller level
-		$_[0] =~ /^[0-9]+$/ ? (shift) : 0
-	);
-	if(defined $offset{$file}) {
-		$line += $offset{$file};
-	} else {
-		$line++;
-	}
-	return join('', qq{#line $line "$file"\n}, @_)
+  my(undef, $file, $line) = caller(
+    # Optional first arg is the caller level
+    $_[0] =~ /^[0-9]+$/ ? (shift) : 0
+  );
+  if(defined $offset{$file}) {
+    $line += $offset{$file};
+  } else {
+    $line++;
+  }
+  return join('', qq{#line $line "$file"\n}, @_)
 }
 
 1;
 
 __END__
-
-=head1 NAME
-
-Eval::LineNumbers - Add line numbers to heredoc blocks that contain perl source code
 
 =head1 SYNOPSIS
 
@@ -94,13 +90,5 @@ is useful if you want to pass a string without a heredoc.  For example:
  eval eval_line_numbers q{
    die "here";
  };
-
-=head1 LICENSE
-
-Copyright (C) 2009 David Muir Sharnoff.
-Copyright (C) 2013 Google, Inc.
-
-This package may be used and redistributed under the terms of either
-the Artistic 2.0 or LGPL 2.1 license.
 
 =cut

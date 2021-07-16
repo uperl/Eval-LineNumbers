@@ -1,8 +1,3 @@
 /Eval-LineNumbers-*
-/Makefile
-/MYMETA.*
-/META.*
-/Makefile.old
-/blib
-/pm_to_blib
-*.bak
+/.build
+*.swp
