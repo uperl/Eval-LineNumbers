@@ -2,7 +2,11 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.35      2021-07-16 06:51:10 -0600
   - Added eval_line_numbers_offset function.
+  - New official repository https://github.com/uperl/Eval-LineNumbers
+    detached from original https://github.com/muir/Eval-LineNumbers
 
 0.34 2013/10/07
 
