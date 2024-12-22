@@ -1,3 +1,5 @@
 /Eval-LineNumbers-*
 /.build
 *.swp
+*.old
+*.orig
